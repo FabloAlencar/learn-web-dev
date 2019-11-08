@@ -1,10 +1,10 @@
 {
-  "name": "auladesweb",
+  "name": "learn-web-dev",
   "version": "1.0.0",
   "description": "tantofaz",
   "main": "index.js",
   "scripts": {
-    "test": "nimporta",
+    "format": "prettier --write ./**/*.{html,css,js,json}",
     "ss": "node server.js",
     "sc": "serve"
   },
@@ -16,6 +16,7 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
+    "prettier": "^1.18.2",
     "serve": "^11.2.0"
   }
 }
