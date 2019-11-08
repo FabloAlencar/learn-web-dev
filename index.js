@@ -1,62 +1,62 @@
-const par = document.getElementById("p1")
-console.log(par)
+const NEW_HELLO_MESSAGE_EVENT_NAME = "newHelloMessage";
 
-par.textContent = "Channels Class!"
+const fetchHelloMessage = async name => {
+  try {
+    const response = await fetch("http://localhost:5001/hello", {
+      method: "post",
+      body: JSON.stringify({ name }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+    return await response.json();
+  } catch (err) {
+    throw new Error(err);
+  }
+};
 
-function sayHello(name) {
-    alert("Alert Say Hello:" + name)
+class HelloMessageDispatcher {
+  subscribers = [];
+
+  addSubscriber(elem) {
+    this.subscribers.push(elem);
+  }
+
+  async nextHelloMessage(name) {
+    const helloMessage = await fetchHelloMessage(name);
+    const event = new CustomEvent(NEW_HELLO_MESSAGE_EVENT_NAME, {
+      detail: helloMessage
+    });
+    this.subscribers.forEach(subscriber => {
+      subscriber.dispatchEvent(event);
+    });
+  }
 }
 
-window.onload = function () {
-    const form = document.getElementById("hello-form")
+window.onload = function() {
+  const helloMessageDispatcher = new HelloMessageDispatcher();
 
-    form.onsubmit = (event) => {
-        event.preventDefault()
-        const formData = new FormData(form)
+  const displayHelloElem = document.getElementById("display-hello");
+  displayHelloElem.addEventListener(NEW_HELLO_MESSAGE_EVENT_NAME, e => {
+    displayHelloElem.textContent = e.detail.message;
+  });
+  helloMessageDispatcher.addSubscriber(displayHelloElem);
 
-        let name 
+  const form = document.getElementById("hello-form");
 
-        for (const entry of formData.entries()) {
-           // console.log(`olha os meus vslores ${entry[0]} , ${entry[1]}`)
-            name  = entry[1]
-        }
+  form.onsubmit = event => {
+    event.preventDefault();
 
-        //displayHello("display-hello", name)
+    const formData = new FormData(form);
 
-        const payLoad = JSON.stringify({name}) 
-
-        const XHR = new XMLHttpRequest()
- 
-        // Define what happens on successful data submission
-        XHR.onload = (e) => {
-          document.getElementById('display-hello').textContent = XHR.response.hello
-        }
-     
-        // Define what happens in case of error
-        XHR.onerror = (e) => {
-          console.error(e)
-        }
-     
-        // Set up our request
-        XHR.open('POST', 'http://localhost:5001/api')
-     
-        XHR.setRequestHeader('Content-Type', 'application/json')
-     
-        XHR.responseType = 'json'
-     
-        // The data sent is what the user provided in the form
-        XHR.send(payLoad)
-    
-
+    let name;
+    for (const entry of formData.entries()) {
+      if (entry[0] === "name") {
+        name = entry[1];
+        break;
+      }
     }
 
-    
-}
-
-
-const displayHello = (id, name) => {
-    document.getElementById(id).textContent = `Hello, ${name}!`
-}
-
-
-
+    helloMessageDispatcher.nextHelloMessage(name);
+  };
+};

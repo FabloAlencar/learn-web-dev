@@ -1,36 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1 id="p1">
-        Hello Fablo! 
+      Hello Fablo!
     </h1>
 
     <form id="hello-form">
+      <fieldset>
+        <label for="name">Say hello to:</label>
+        <input type="text" name="name" value="" />
+        <button type="submit">Say it!</button>
+      </fieldset>
+    </form>
 
-        <fieldset>
+    <h1 id="display-hello"></h1>
 
-          <label for="name">Say hello to:</label>
-          <input type="text" name="name" value="" />
-          <button type="submit">Say it!</button>
-
-        </fieldset>
-
-      </form>
-
-      <h1 id="display-hello"> 
-
-      </h1>
-
-
-<script src="index.js"
-
-></script>
-
-</body>
+    <script src="index.js"></script>
+  </body>
 </html>
