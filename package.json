@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "nimporta",
-    "start": "node server.js"
+    "ss": "node server.js",
+    "sc": "serve"
   },
   "author": "Fablo",
   "license": "ISC",
@@ -13,5 +14,8 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "serve": "^11.2.0"
   }
 }
