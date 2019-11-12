@@ -31,6 +31,17 @@ class HelloMessageDispatcher {
       subscriber.dispatchEvent(event);
     });
   }
+
+  async nextHelloMessage(surnaname) {
+    const helloMessage = await fetchHelloMessage(surnaname);
+    const event = new CustomEvent(NEW_HELLO_MESSAGE_EVENT_NAME, {
+      detail: helloMessage
+    });
+    this.subscribers.forEach(subscriber => {
+      subscriber.dispatchEvent(event);
+    });
+  }
+
 }
 
 window.onload = function() {

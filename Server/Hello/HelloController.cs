@@ -19,7 +19,7 @@ namespace Server.Controllers
         [HttpPost]
         public HelloResponse GetHelloMessage(HelloRequest helloRequest)
         {
-            var response = new HelloResponse($"A lot of message {helloRequest.Name}");
+            var response = new HelloResponse($"A lot of message {helloRequest.Surname}, {helloRequest.Name} ");
             return response;
         }
     }
